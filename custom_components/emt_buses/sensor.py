@@ -1,4 +1,4 @@
-"""Support for EMT Madrid (Empresa Municipal de Transportes de Madrid) to get next departures."""
+"""Support for EMT Madrid (Empresa Municipal de Transportes de Madrid) to get next bus departures."""
 
 import logging
 from typing import Any
@@ -19,7 +19,7 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from ..emt_buses.buses import BusesEMT
+from custom_components.emt_buses.buses import BusesEMT
 
 _LOGGER = logging.getLogger(__name__)
 

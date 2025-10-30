@@ -1,5 +1,6 @@
-from emt_madrid import APIEMT
-from emt_madrid import BASE_URL, _LOGGER
+import math
+from custom_components.emt_madrid.emt_madrid import APIEMT
+from custom_components.emt_madrid.emt_madrid import BASE_URL, _LOGGER
 
 
 ENDPOINT_ARRIVAL_TIME = "v3/transport/busemtmad/stops/"

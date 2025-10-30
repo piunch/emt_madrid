@@ -1,5 +1,5 @@
-from emt_madrid import APIEMT
-from emt_madrid import BASE_URL, _LOGGER
+from custom_components.emt_madrid.emt_madrid import APIEMT
+from custom_components.emt_madrid.emt_madrid import BASE_URL, _LOGGER
 
 
 ENDPOINT_BICIMAD_STATIONS = "v3/transport/bicimad/stations/"
@@ -74,7 +74,7 @@ class BicimadEMT(APIEMT):
                 self._station_info.update(
                     {
                         "station_number": station_info.get('number'),
-                        "station_name": station_info.get('number'),
+                        "station_name": station_info.get('name'),
                         "station_coordinates": station_info.get('geometry').get('coordinates'),
                         "station_address": station_info.get('address'),
                         "docked_bikes": station_info.get('dock_bikes'),
@@ -86,8 +86,8 @@ class BicimadEMT(APIEMT):
                 self._station_info.update(
                     {
                         "station_number": station_info.get('number'),
-                        "station_name": station_info.get('number'),
-                        "station_coordinates": station_info.get('number'),
+                        "station_name": station_info.get('name'),
+                        "station_coordinates": station_info.get('geometry').get('coordinates'),
                         "station_address": station_info.get('address'),
                         "docked_bikes": station_info.get('dock_bikes'),
                         "free_bases": station_info.get('free_bases'),

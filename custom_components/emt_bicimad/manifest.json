@@ -1,6 +1,6 @@
 {
   "domain": "emt_bicimad",
-  "name": "EMT Madrid",
+  "name": "EMT Bicimad",
   "documentation": "https://github.com/fermartv/EMT-Madrid/",
   "issue_tracker": "https://github.com/fermartv/EMT-Madrid/issues",
   "codeowners": ["@FerMartV"],

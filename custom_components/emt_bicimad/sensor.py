@@ -1,4 +1,4 @@
-"""Support for EMT Madrid (Empresa Municipal de Transportes de Madrid) to get next departures."""
+"""Support for EMT Madrid (Empresa Municipal de Transportes de Madrid) to get BiciMad stations info."""
 
 import logging
 from typing import Any
@@ -19,7 +19,7 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from ..emt_bicimad.bicimad import BicimadEMT
+from custom_components.emt_bicimad.bicimad import BicimadEMT
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -67,7 +67,7 @@ class BicimadStationSensor(Entity):
     @property
     def state(self) -> int:
         """Return the state of the sensor (Number of bikes on the Bicimad station)."""
-        docked_bikes = self._bicimad_emt.get_docked_bikes(self._station_id)
+        docked_bikes = self._bicimad_emt.get_docked_bikes()
         return docked_bikes
 
     @property

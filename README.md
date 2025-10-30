@@ -1,8 +1,9 @@
 _Please :star: this repo if you find it useful_
 
-# EMT Madrid bus platform for Home Assistant
+# EMT Madrid bus and bicimad platform for Home Assistant
 
 This is a custom sensor for Home Assistant that allows you to have the waiting time for a specific Madrid-EMT bus stop. Each sensor will provide the arrival time for the next 2 buses of the line specified in the configuration.
+The integration also provides sensors to track the free docks and available bikes in BiciMad stations.
 
 Thanks to [EMT Madrid MobilityLabs](https://mobilitylabs.emtmadrid.es/) for providing the data and [documentation](https://apidocs.emtmadrid.es/).
 
@@ -29,19 +30,18 @@ To use the EMT Mobilitylabs API you need to register in their [website](https://
 
 1. Using the tool of choice open the directory for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory there, you need to create it.
-3. In the `custom_components` directory create a new directory called `emt_madrid`.
-4. Download _all_ the files from the `custom_components/emt_madrid/` directory in this repository.
+4. Download _all_ the files from the `custom_components` directory in this repository.
 5. Place the files you downloaded in the new directory you created.
 6. Restart Home Assistant
 
-## Add sensor to Home Assistant
+## Add emt_buses sensor to Home Assistant
 
-Add `emt_madrid` sensor to your `configuration.yaml` file:
+Add `emt_buses` sensor to your `configuration.yaml` file:
 
    ```yaml
    # Example configuration.yaml entry
    sensor:
-     - platform: emt_madrid
+     - platform: emt_buses
        email: !secret EMT_EMAIL
        password: !secret EMT_PASSWORD
        stop: 72
@@ -75,7 +75,7 @@ Add `emt_madrid` sensor to your `configuration.yaml` file:
 _Default value: "mdi:bus"_
 
 
-## Sensors, status and attributes
+### Sensors, status and attributes
 
 Once you have the platform up and running, you will have one sensor per line specified. If no lines are provided, it will create a sensor for each line at that stop ID. The name of the sensor will be automatically generated using the following structure: Bus {line} - {stop_name}. All the sensors will update the data automatically every minute, and you should have the following data:
 
@@ -170,6 +170,76 @@ template:
         unit_of_measurement: "min"
         state: "{{ state_attr('sensor.bus_27_cibeles_casa_de_america', 'next_bus') }}"
 ```
+
+## Add emt_bicimad sensor to Home Assistant
+
+Add `emt_bicimad` sensor to your `configuration.yaml` file:
+
+   ```yaml
+   # Example configuration.yaml entry
+   sensor:
+     - platform: emt_bicimad
+       email: !secret EMT_EMAIL
+       password: !secret EMT_PASSWORD
+       station_id: 2139
+       icon: "mdi:bike"
+   ```
+
+### Configuration Variables
+
+**email**:\
+ _(string) (Required)_\
+ Email account used to register in the EMT Madrid API.
+
+**password**:\
+ _(string) (Required)_\
+ Password used to register in the EMT Madrid API.
+
+**station_id**:\
+ _(integer) (Required)_\
+ Bicimad station ID (different from station number).
+ Station ID can be obtained from [BiciMad webpage](https://www.bicimad.com/mapa) as it shows the following image.
+
+![Example attributes](obtain_bicimad_station-id.png)
+
+**icon**:\
+ _(string) (Optional)_\
+ Icon to use in the frontend.
+_Default value: "mdi:bus"_
+
+### Attributes
+
+**station_id**:\
+ _(int)_\
+ Station ID given in the configuration.
+
+**station_number**:\
+ _(int)_\
+ Station number as it shows in BiciMad App.
+
+**station_name**:\
+ _(string)_\
+ Station name from EMT.
+
+**station_address**:\
+ _(string)_\
+ Station address from EMT.
+
+**free_bases**:\
+ _(int)_\
+ Number of free bases to dock bikes into.
+
+**bikes**:\
+ _(int)_\
+ Number of available bikes in the station.
+
+**unit_of_measurement**:\
+ _(string)_\
+ Unit of measurement for the sensor.
+
+**station_coordinates**:\
+ _(list)_\
+ Geographic coordinates of the station.
 
 ## Roadmap
 
