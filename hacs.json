@@ -1,6 +1,6 @@
 {
-  "name": "EMT-Madrid bus",
+  "name": "EMT Madrid",
   "render_readme": true,
   "country": "ES",
-  "domains": ["sensor"]
+  "domains": ["emt_madrid"]
 }
