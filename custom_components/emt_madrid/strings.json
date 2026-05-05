@@ -1,0 +1,57 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "EMT Madrid",
+        "description": "Enter your EMT MobilityLabs credentials.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "sensor_type": {
+        "title": "Sensor type",
+        "description": "Select the type of sensor you want to create.",
+        "data": {
+          "sensor_type": "Sensor type"
+        }
+      },
+      "bus": {
+        "title": "Bus stop",
+        "description": "Configure a bus stop to monitor.",
+        "data": {
+          "stop_id": "Stop ID",
+          "lines": "Lines (comma separated, leave empty for all)"
+        }
+      },
+      "bicimad": {
+        "title": "BiciMad station",
+        "description": "Configure a BiciMad station to monitor.",
+        "data": {
+          "station_id": "Station ID"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid email or password",
+      "cannot_connect": "Cannot connect to EMT API",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This stop/station is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "EMT Madrid Options",
+        "description": "Manage sensors for this integration entry.",
+        "data": {
+          "stop_id": "Stop ID",
+          "station_id": "Station ID",
+          "lines": "Lines (comma separated, leave empty for all)"
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,0 @@
-"""EMT Madrid integration."""
