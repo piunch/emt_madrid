@@ -1,6 +1,6 @@
-_Please :star: this repo if you find it useful_
+# EMT Madrid bus and BiciMad platform for Home Assistant
 
-# EMT Madrid bus and bicimad platform for Home Assistant
+> **Note:** This is a fork of the original [EMT Madrid integration](https://github.com/fermartv/EMT-Madrid) by [FerMartV](https://github.com/fermartv), with added BiciMad support.
 
 This is a custom integration for Home Assistant that allows you to have the waiting time for a specific Madrid-EMT bus stop. Each sensor will provide the arrival time for the next 2 buses of the line specified in the configuration.
 The integration also provides sensors to track the free docks and available bikes in BiciMad stations.
@@ -20,7 +20,7 @@ To use the EMT Mobilitylabs API you need to register in their [website](https://
 
 1. Open Home Assistant and go to HACS (Home Assistant Community Store).
 2. In HACS, go to the "Integrations" tab and click on the three dots in the top right corner.
-3. Select "Custom repositories" and enter the repository URL: `https://github.com/fermartv/emt_madrid`.
+3. Select "Custom repositories" and enter the repository URL: `https://github.com/piunch/emt_madrid`.
 4. Select the category as "Integration" and click "Add."
 5. Once the repository is added, search for "EMT Madrid" in HACS and click "Install."
 6. Restart Home Assistant.
@@ -36,7 +36,7 @@ To use the EMT Mobilitylabs API you need to register in their [website](https://
 
 ## Configuration
 
-This integration is configured entirely through the Home Assistant UI (no `configuration.yaml` needed).
+This integration is configured entirely through the Home Assistant UI. Configuration via `configuration.yaml` is no longer supported — use the config flow instead.
 
 1. Go to **Settings** → **Devices & Services** → **Add Integration**
 2. Search for **EMT Madrid** and select it
@@ -48,6 +48,10 @@ This integration is configured entirely through the Home Assistant UI (no `confi
 6. Click **Submit**
 
 To add more stops/stations, repeat the process — each stop/station is added as a separate entry.
+
+### Options
+
+After adding a bus stop, you can edit the list of bus lines by clicking **Configure** on the integration entry in Home Assistant.
 
 ## Bus Sensors
 
