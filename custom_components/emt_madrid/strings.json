@@ -18,10 +18,10 @@
       },
       "bus": {
         "title": "Bus stop",
-        "description": "Configure a bus stop to monitor.",
+        "description": "Configure a bus stop to monitor. Specify lines as a comma-separated list (e.g. 27, 34, 45) or leave empty to monitor all lines.",
         "data": {
           "stop_id": "Stop ID",
-          "lines": "Lines (comma separated, leave empty for all)"
+          "lines": "Lines (e.g. 27, 34, 45)"
         }
       },
       "bicimad": {
@@ -49,7 +49,7 @@
         "data": {
           "stop_id": "Stop ID",
           "station_id": "Station ID",
-          "lines": "Lines (comma separated, leave empty for all)"
+          "lines": "Lines (e.g. 27, 34, 45)"
         }
       }
     }

@@ -32,6 +32,26 @@ class APIEMT:
         """Return the current access token."""
         return self._token
 
+    def get_all_bicimad_stations(self) -> list[dict] | None:
+        """Fetch all available BiciMad stations."""
+        url = f"{BASE_URL}v3/transport/bicimad/stations/"
+        headers = {"accessToken": self._token}
+        if self._token is None:
+            _LOGGER.warning("Cannot fetch stations: not authenticated")
+            return None
+        try:
+            response = self._make_request(url, headers=headers, method="GET")
+            if response.get("code") in ("00", "01"):
+                return response.get("data", [])
+            _LOGGER.warning(
+                "Failed to fetch BiciMad stations list (code: %s)",
+                response.get("code"),
+            )
+            return None
+        except Exception:
+            _LOGGER.exception("Error fetching BiciMad stations list")
+            return None
+
     def _extract_token(self, response: dict) -> str | None:
         """Extract the access token from the API response."""
         try:

@@ -46,12 +46,6 @@ DATA_SCHEMA_BUS = vol.Schema(
     }
 )
 
-DATA_SCHEMA_BICIMAD = vol.Schema(
-    {
-        vol.Required(CONF_STATION_ID): cv.positive_int,
-    }
-)
-
 
 class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for EMT Madrid."""
@@ -72,6 +66,25 @@ class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the initial step."""
         errors: dict[str, str] = {}
 
+        existing_entries = self._async_current_entries()
+        if existing_entries and user_input is None:
+            first_entry = existing_entries[0]
+            email = first_entry.data.get(CONF_EMAIL)
+            password = first_entry.data.get(CONF_PASSWORD)
+            if email and password:
+                self._api = APIEMT(email, password)
+                try:
+                    token = await self.hass.async_add_executor_job(
+                        self._api.authenticate
+                    )
+                    if token and token != "Invalid token":
+                        self._email = email
+                        self._password = password
+                        self._token = token
+                        return await self.async_step_sensor_type()
+                except Exception:
+                    _LOGGER.exception("Error reusing stored credentials")
+
         if user_input is not None:
             email = user_input[CONF_EMAIL]
             password = user_input[CONF_PASSWORD]
@@ -87,6 +100,7 @@ class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     self._email = email
                     self._password = password
                     self._token = token
+                    await self._update_existing_entries(email, password)
                     return await self.async_step_sensor_type()
             except Exception:
                 _LOGGER.exception("Error authenticating with EMT API")
@@ -97,6 +111,20 @@ class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=DATA_SCHEMA_USER,
             errors=errors,
         )
+
+    async def _update_existing_entries(self, email: str, password: str) -> None:
+        """Update credentials in all existing config entries."""
+        for entry in self._async_current_entries():
+            if (
+                entry.data.get(CONF_EMAIL) != email
+                or entry.data.get(CONF_PASSWORD) != password
+            ):
+                new_data = dict(entry.data)
+                new_data[CONF_EMAIL] = email
+                new_data[CONF_PASSWORD] = password
+                self.hass.config_entries.async_update_entry(
+                    entry, data=new_data
+                )
 
     async def async_step_sensor_type(
         self, user_input: dict[str, Any] | None = None
@@ -173,9 +201,35 @@ class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 },
             )
 
+        data_schema = vol.Schema(
+            {vol.Required(CONF_STATION_ID): cv.positive_int}
+        )
+
+        if self._api is not None and self._api.get_token():
+            stations = await self.hass.async_add_executor_job(
+                self._api.get_all_bicimad_stations
+            )
+            if stations:
+                station_options = {
+                    station["id"]: (
+                        f"{station.get('number', '?')} - "
+                        f"{station.get('name', 'Unknown')}"
+                    )
+                    for station in stations
+                    if "id" in station
+                }
+                if station_options:
+                    data_schema = vol.Schema(
+                        {
+                            vol.Required(CONF_STATION_ID): vol.In(
+                                station_options
+                            )
+                        }
+                    )
+
         return self.async_show_form(
             step_id="bicimad",
-            data_schema=DATA_SCHEMA_BICIMAD,
+            data_schema=data_schema,
             errors=errors,
         )
 
