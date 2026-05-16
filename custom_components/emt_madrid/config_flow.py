@@ -210,6 +210,7 @@ class EMTMadridConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._api.get_all_bicimad_stations
             )
             if stations:
+                stations.sort(key=lambda s: s.get("id", 0))
                 station_options = {
                     station["id"]: (
                         f"{station.get('number', '?')} - "
