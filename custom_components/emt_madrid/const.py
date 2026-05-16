@@ -1,5 +1,7 @@
 """Constants for EMT Madrid integration."""
 
+from homeassistant.const import CONF_EMAIL, CONF_PASSWORD
+
 DOMAIN = "emt_madrid"
 
 CONF_STOP_ID = "stop_id"

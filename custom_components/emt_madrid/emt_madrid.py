@@ -3,8 +3,6 @@
 import json
 import logging
 
-import requests
-
 BASE_URL = "https://openapi.emtmadrid.es/"
 ENDPOINT_LOGIN = "v3/mobilitylabs/user/login/"
 
@@ -67,6 +65,8 @@ class APIEMT:
         self, url: str, headers: dict | None = None, data: dict | None = None, method: str = "POST"
     ) -> dict:
         """Send an HTTP request to the specified URL."""
+        import requests
+
         if method not in ("POST", "GET"):
             raise ValueError(f"Invalid HTTP method: {method}")
         kwargs = {"url": url, "headers": headers, "timeout": 10}
