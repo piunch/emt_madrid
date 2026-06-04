@@ -23,14 +23,15 @@ from .const import (
     ATTR_DISTANCE,
     ATTR_END_TIME,
     ATTR_FREE_BASES,
+    ATTR_LATITUDE,
     ATTR_LINE,
+    ATTR_LONGITUDE,
     ATTR_MAX_FREQ,
     ATTR_MIN_FREQ,
     ATTR_NEXT_BUS,
     ATTR_ORIGIN,
     ATTR_START_TIME,
     ATTR_STATION_ADDRESS,
-    ATTR_STATION_COORDINATES,
     ATTR_STATION_ID,
     ATTR_STATION_NAME,
     ATTR_STATION_NUMBER,
@@ -213,12 +214,16 @@ class EMTBicimadSensor(SensorEntity):
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the device state attributes."""
         station_info = self._bicimad_emt.get_station_info()
+        coordinates = station_info.get("station_coordinates")
+        latitude = coordinates[1] if coordinates and len(coordinates) > 1 else None
+        longitude = coordinates[0] if coordinates else None
 
         return {
             ATTR_STATION_ID: self._station_id,
             ATTR_STATION_NUMBER: station_info.get("station_number"),
             ATTR_STATION_NAME: station_info.get("station_name"),
-            ATTR_STATION_COORDINATES: station_info.get("station_coordinates"),
+            ATTR_LATITUDE: latitude,
+            ATTR_LONGITUDE: longitude,
             ATTR_STATION_ADDRESS: station_info.get("station_address"),
             ATTR_FREE_BASES: station_info.get("free_bases"),
             ATTR_BIKES: self._bicimad_emt.get_docked_bikes(),
