@@ -160,6 +160,9 @@ class EMTBusSensor(SensorEntity):
         arrival_time = self._buses_emt.get_arrival_time(self._bus_line)
         stop_info = self._buses_emt.get_stop_info()
         line_info = self._buses_emt.get_line_info(self._bus_line)
+        coordinates = stop_info.get("bus_stop_coordinates")
+        latitude = coordinates[1] if coordinates and len(coordinates) > 1 else None
+        longitude = coordinates[0] if coordinates else None
 
         return {
             ATTR_NEXT_BUS: arrival_time[1],
@@ -174,6 +177,8 @@ class EMTBusSensor(SensorEntity):
             ATTR_STOP_ID: self._stop_id,
             ATTR_STOP_NAME: stop_info.get("bus_stop_name"),
             ATTR_STOP_ADDRESS: stop_info.get("bus_stop_address"),
+            ATTR_LATITUDE: latitude,
+            ATTR_LONGITUDE: longitude,
             ATTR_ATTRIBUTION: ATTRIBUTION,
         }
 
