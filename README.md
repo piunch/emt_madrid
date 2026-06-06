@@ -135,9 +135,7 @@ template:
 
 ### Getting the Station ID
 
-When configuring a BiciMad sensor, a dropdown with all available stations is shown. Select the desired station by its number and name (e.g. `123 - Gran Vía`). If the dropdown fails to load, you can find the station ID on the [BiciMad website](https://www.bicimad.com/mapa) — when you click on a station, the URL will contain the station ID.
-
-![Example attributes](obtain_bicimad_station-id.png)
+When configuring a BiciMad sensor, a dropdown with all available stations is shown. Select the desired station by its number and name (e.g. `123 - Gran Vía`).
 
 ## Roadmap
 
