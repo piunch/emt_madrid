@@ -38,13 +38,17 @@ To use the EMT Mobilitylabs API you need to register in their [website](https://
 
 This integration is configured entirely through the Home Assistant UI. Configuration via `configuration.yaml` is no longer supported — use the config flow instead.
 
+Credentials are only required the **first time** you add the integration. When adding additional stops or stations, your stored credentials are reused automatically.
+
 1. Go to **Settings** → **Devices & Services** → **Add Integration**
 2. Search for **EMT Madrid** and select it
-3. Enter your EMT MobilityLabs **email** and **password**
+3. Enter your EMT MobilityLabs **email** and **password** (only on the first stop/station)
 4. Select the type of sensor you want to create:
    - **Bus (EMT)**: Monitor bus arrival times at a stop
    - **BiciMad**: Monitor available bikes at a station
-5. Enter the **Stop ID** or **Station ID** (and optionally specify bus lines)
+5. Configure your sensor:
+   - **Bus**: Enter the **Stop ID** and optionally specify **lines** as a comma-separated list (e.g. `27, 34, 45`). Leave empty to monitor all lines.
+   - **BiciMad**: Select the station from the dropdown list (shows all available BiciMad stations). No need to look up the ID manually.
 6. Click **Submit**
 
 To add more stops/stations, repeat the process — each stop/station is added as a separate entry.
@@ -89,6 +93,10 @@ Once configured, you will have one sensor per line specified. If no lines are pr
 
 **distance**: _(int)_ Distance (in metres) from the next bus to the stop.
 
+**latitude**: _(float)_ Latitude of the bus stop. Useful for displaying on a map card.
+
+**longitude**: _(float)_ Longitude of the bus stop. Useful for displaying on a map card.
+
 ### Getting the Stop ID
 
 You can find the bus stop ID using the EMT MobilityLabs API or by inspecting the EMT website.
@@ -121,11 +129,13 @@ template:
 
 **bikes**: _(int)_ Number of available bikes in the station.
 
-**station_coordinates**: _(list)_ Geographic coordinates of the station.
+**latitude**: _(float)_ Latitude of the station. Useful for displaying on a map card.
+
+**longitude**: _(float)_ Longitude of the station. Useful for displaying on a map card.
 
 ### Getting the Station ID
 
-The station ID can be obtained from the [BiciMad website](https://www.bicimad.com/mapa). When you click on a station, the URL will contain the station ID.
+When configuring a BiciMad sensor, a dropdown with all available stations is shown. Select the desired station by its number and name (e.g. `123 - Gran Vía`). If the dropdown fails to load, you can find the station ID on the [BiciMad website](https://www.bicimad.com/mapa) — when you click on a station, the URL will contain the station ID.
 
 ![Example attributes](obtain_bicimad_station-id.png)
 
