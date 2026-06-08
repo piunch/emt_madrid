@@ -7,6 +7,10 @@
         "data": {
           "email": "Email",
           "password": "Password"
+        },
+        "data_description": {
+          "email": "Email de tu cuenta de EMT MobilityLabs",
+          "password": "Contraseña de tu cuenta de EMT MobilityLabs"
         }
       },
       "sensor_type": {
@@ -14,6 +18,9 @@
         "description": "Select the type of sensor you want to create.",
         "data": {
           "sensor_type": "Sensor type"
+        },
+        "data_description": {
+          "sensor_type": "Elige entre monitorizar tiempos de llegada de autobuses o estaciones de BiciMad."
         }
       },
       "bus": {
@@ -22,13 +29,20 @@
         "data": {
           "stop_id": "Stop ID",
           "lines": "Lines (e.g. 27, 34, 45)"
+        },
+        "data_description": {
+          "stop_id": "Identificador num\u00e9rico de la parada. Puedes encontrarlo en la web de EMT o usando la API de MobilityLabs.",
+          "lines": "Lista de l\u00edneas separadas por comas. D\u00e9jalo vac\u00edo para monitorizar todas las l\u00edneas de la parada."
         }
       },
       "bicimad": {
         "title": "BiciMad station",
         "description": "Configure a BiciMad station to monitor.",
         "data": {
-          "station_id": "Station ID"
+          "station_id": "Estaci\u00f3n"
+        },
+        "data_description": {
+          "station_id": "Selecciona una estaci\u00f3n del desplegable. Si no carga, introduce el ID num\u00e9rico manualmente."
         }
       }
     },
@@ -50,6 +64,9 @@
           "stop_id": "Stop ID",
           "station_id": "Station ID",
           "lines": "Lines (e.g. 27, 34, 45)"
+        },
+        "data_description": {
+          "lines": "Lista de l\u00edneas separadas por comas. D\u00e9jalo vac\u00edo para monitorizar todas las l\u00edneas."
         }
       }
     }
